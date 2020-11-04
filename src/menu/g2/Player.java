@@ -185,16 +185,106 @@ public class Player extends menu.sim.Player {
 	// highest minimum
 	// for each meal find lowest satisfaction
 	// use that value to rank all the foods
-	List<FoodType> calcOrderRanksBreakfast(List<FamilyMember> familyMembers) {
-		return new ArrayList<FoodType>();
 
+	Food tempFood = new Food();
+
+	List<FoodType> calcOrderRanksBreakfast(List<FamilyMember> familyMembers) {
+
+		// double familySelectivenessScores[] = {};
+		List<FoodType> finalBreakfastRank = new ArrayList<FoodType>();
+		List<Double> familySelectivenessScores = new ArrayList<Double>();
+		
+		for(FamilyMember familyMember : familyMembers) {
+
+			double selectivenessScore = 0;
+
+			// System.out.println(" members - dinner 10 fpref.: " + (familyMember).getFoodPreference(FoodType.DINNER10) );
+
+			for (FoodType f : FoodType.values()) {
+
+				// int count = 0;
+				if( tempFood.isBreakfastType(f)) {
+					// System.out.println(f);
+					selectivenessScore += (familyMember).getFoodPreference(f);
+	
+				}
+			}
+
+		familySelectivenessScores.add(selectivenessScore);
+
+		int mostSelective = familySelectivenessScores.indexOf(Collections.min(familySelectivenessScores));
+
+		// familyMembers.get(mostSelective);   
+
+		// finalBreakFastRank
+		// List<FoodType> finalBreakfastRank = new ArrayList<FoodType>();
+
+		for (FoodType f : FoodType.values()) {
+
+			double topChoice = 0;
+
+			// int count = 0;
+			if( tempFood.isBreakfastType(f)) {
+				// System.out.println(f);
+				// familyMembers.get(mostSelective).getFoodPreference(f);
+				if(familyMembers.get(mostSelective).getFoodPreference(f) > topChoice) {
+
+					finalBreakfastRank.add(0, f);
+
+				}
+			}
+		}
+	}
+		return finalBreakfastRank;
 	}
 
 	// Ahad
 	// TODO
 	// 2.) rank lunch items
 	List<FoodType> calcOrderRanksLunch(List<FamilyMember> familyMembers) {
-		return new ArrayList<FoodType>();
+
+		List<FoodType> finalLunchRank = new ArrayList<FoodType>();
+		List<Double> familySelectivenessScores = new ArrayList<Double>();
+		
+		for(FamilyMember familyMember : familyMembers) {
+
+			double selectivenessScore = 0;
+
+			// System.out.println(" members - dinner 10 fpref.: " + (familyMember).getFoodPreference(FoodType.DINNER10) );
+
+			for (FoodType f : FoodType.values()) {
+
+				// int count = 0;
+				if( tempFood.isBreakfastType(f)) {
+					// System.out.println(f);
+					selectivenessScore += (familyMember).getFoodPreference(f);
+	
+				}
+			}
+
+		familySelectivenessScores.add(selectivenessScore);
+
+		int mostSelective = familySelectivenessScores.indexOf(Collections.min(familySelectivenessScores));
+
+
+
+		for (FoodType f : FoodType.values()) {
+
+			double topChoice = 0;
+
+			// int count = 0;
+			if( tempFood.isLunchType(f)) {
+				// System.out.println(f);
+				// familyMembers.get(mostSelective).getFoodPreference(f);
+				if(familyMembers.get(mostSelective).getFoodPreference(f) > topChoice) {
+
+					finalLunchRank.add(0, f);
+
+				}
+			}
+		}
+	}
+		return finalLunchRank;
 
 	}
 
@@ -202,7 +292,51 @@ public class Player extends menu.sim.Player {
 	// TODO
 	// 2.) rank dinner items
 	List<FoodType> calcOrderRanksDinner(List<FamilyMember> familyMembers) {
-		return new ArrayList<FoodType>();
+
+
+		List<FoodType> finalDinnerRank = new ArrayList<FoodType>();
+		List<Double> familySelectivenessScores = new ArrayList<Double>();
+		
+		for(FamilyMember familyMember : familyMembers) {
+
+			double selectivenessScore = 0;
+
+
+			for (FoodType f : FoodType.values()) {
+
+				// int count = 0;
+				if( tempFood.isBreakfastType(f)) {
+					// System.out.println(f);
+					selectivenessScore += (familyMember).getFoodPreference(f);
+	
+				}
+			}
+
+		familySelectivenessScores.add(selectivenessScore);
+
+		int mostSelective = familySelectivenessScores.indexOf(Collections.min(familySelectivenessScores));
+
+
+
+		for (FoodType f : FoodType.values()) {
+
+			double topChoice = 0;
+
+			// int count = 0;
+			if( tempFood.isDinnerType(f)) {
+				// System.out.println(f);
+				// familyMembers.get(mostSelective).getFoodPreference(f);
+				if(familyMembers.get(mostSelective).getFoodPreference(f) > topChoice) {
+
+					finalDinnerRank.add(0, f);
+
+				}
+			}
+		}
+	}
+		return finalDinnerRank;
+
+		
 	}
 
 	// SCOTT
