@@ -493,50 +493,104 @@ public class Player extends menu.sim.Player {
 	//pass to sortByValue to sort dinners
 	//set dinnerallocranks to that
 
+	// private List<FamilyMember> familyMembers;
+
+
 	private void updateDinnerAlloc() {
 
-		// this.dinnerAllocRanks = new ArrayList<>();
+		HashMap<FoodType, Double> prefMetric = new HashMap<>();
+		Food temp1 = new Food();
 
-		for(FamilyMember familyMember : familyMembers) {
+		for(FoodType ft : FoodType.values()) {
 
-			//for each family member, calculate their current preferences
-			HashMap<FoodType, Double> currentPreferences = new HashMap<>();
+			// System.out.println("HEREEE" + ft);
+
+			double rankMet = 0.0;
+			int count = 0;
+
+			if (temp1.isDinnerType(ft)) {
+
+			System.out.println("HEREEE" + ft);
 
 
-			Iterator it = dinnerRanks.iterator(); 
+			for(FamilyMember fm : familyMembers) {
+				count++;
 
-			while (it.hasNext()) {
-
-				// System.out.println(it.next());
-
-				FoodType foodType = (FoodType) it.next();
-				// System.out.println(element);
-
-				int daysAgo = lastEaten(foodType, familyMember, MealType.DINNER);
+				int daysAgo = lastEaten(ft, fm, MealType.DINNER);
 				int factor = 1;
 
 				if(daysAgo > 0) {
-					//System.out.println("days ago is " + daysAgo);
 					factor = daysAgo/(daysAgo+1);
 				}
 
-				double globalPreference = familyMember.getFoodPreference(foodType);
-				double currentPreference = factor*globalPreference;
+				double globalPref= fm.getFoodPreference(ft);
+				double currentPref = factor*globalPref;
 
-				currentPreferences.put(foodType, currentPreference);
+				rankMet += currentPref;
 
+				// rankMet+= fm.getFoodPreference(ft);
+
+				// familyPreferences.put(food, meanSatisfaction);
+				// }
+				// this.dinnerRanks = (sortByValue(familyPreferences));
+
+				
 
 			}
 
-			//sort dinners by current preference
+			rankMet = rankMet/count;
 
-			this.dinnerAllocRanks = new ArrayList<>(dinnerRanks);
-			dinnerAllocRanks.sort((dinner1, dinner2) -> (int) (100*currentPreferences.get(dinner2)) - (int) (100*currentPreferences.get(dinner1)));
+			}
 
+			prefMetric.put(ft, rankMet);
 
-			break;
 
 		}
+
+		this.dinnerRanks = (sortByValue(prefMetric));
+
+
+		// Iterator fmIt = familyMembers.iterator();
+		// List<FamilyMember> fmaverage = new FamilyMember();
+
+		// for(FamilyMember fm : familyMembers) {
+
+		// }
+			
+
+		
+
+		// for(FamilyMember familyMember : familyMembers) {
+
+		// 	HashMap<FoodType, Double> currentPreferences = new HashMap<>();
+		// 	Iterator it = dinnerRanks.iterator(); 
+
+		// 	while (it.hasNext()) {
+
+		// 		FoodType foodType = (FoodType) it.next();
+		// 		// System.out.println(foodType);
+
+		// 		int daysAgo = lastEaten(foodType, familyMember, MealType.DINNER);
+		// 		int factor = 1;
+
+		// 		if(daysAgo > 0) {
+		// 			factor = daysAgo/(daysAgo+1);
+		// 		}
+
+		// 		double globalPreference = familyMember.getFoodPreference(foodType);
+		// 		double currentPreference = factor*globalPreference;
+
+		// 		currentPreferences.put(foodType, currentPreference);
+
+		// 	}
+
+		// 	this.dinnerAllocRanks = new ArrayList<>(dinnerRanks);
+		// 	dinnerAllocRanks.sort((dinner1, dinner2) -> (int) (100*currentPreferences.get(dinner2)) - (int) (100*currentPreferences.get(dinner1)));
+
+		// 	System.out.println(" We breaking here!!! ");
+
+		// 	break;
+		// }
 
 	}
 
