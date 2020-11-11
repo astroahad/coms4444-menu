@@ -510,7 +510,7 @@ public class Player extends menu.sim.Player {
 
 			if (temp1.isDinnerType(ft)) {
 
-			System.out.println("HEREEE" + ft);
+			// System.out.println("HEREEE" + ft);
 
 
 			for(FamilyMember fm : familyMembers) {
@@ -533,7 +533,6 @@ public class Player extends menu.sim.Player {
 				// familyPreferences.put(food, meanSatisfaction);
 				// }
 				// this.dinnerRanks = (sortByValue(familyPreferences));
-
 				
 
 			}
